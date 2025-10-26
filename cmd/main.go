@@ -2,7 +2,6 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 	"os"
 	"time"
@@ -16,13 +15,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	user := os.Getenv("DATABASE_USER")
-	password := os.Getenv("DATABASE_PASSWORD")
-	address := os.Getenv("DATABASE_ADDRESS")
-	protocol := os.Getenv("DATABASE_PROTOCOL")
-	name := os.Getenv("DATABASE_NAME")
-
-	dsn := fmt.Sprintf("%s:%s@%s(%s)/%s?charset=utf8", user, password, protocol, address, name)
+	dsn := os.Getenv("DATABASE_DSN")
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		log.Fatal(err)
