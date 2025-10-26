@@ -1,10 +1,18 @@
 package routes
 
-import "net/http"
+import (
+	"log"
+	"net/http"
+)
 
 type PostsHandler struct {
+	Config
 }
 
 func (handler *PostsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Bonjour le monde"))
+	tmpl := handler.BaseTemplate
+
+	if err := tmpl.Execute(w, nil); err != nil {
+		log.Fatal(err)
+	}
 }

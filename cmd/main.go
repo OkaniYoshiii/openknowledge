@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"flag"
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 	"os"
@@ -37,8 +38,17 @@ func main() {
 		log.Fatal(err)
 	}
 
+	tmplDir := "./website/templates"
+	baseTmpl := template.Must(template.New("base.html").ParseFiles(tmplDir + "/base.html"))
+
+	config := routes.Config{}
+	config.TemplateDir = tmplDir
+	config.BaseTemplate = baseTmpl
+
 	mux := http.NewServeMux()
-	mux.Handle("GET /", new(routes.PostsHandler))
+	mux.Handle("GET /", &routes.PostsHandler{
+		Config: config,
+	})
 
 	server := http.Server{
 		Addr:              *address,
