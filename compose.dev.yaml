@@ -1,0 +1,16 @@
+services:
+    database:
+        container_name: openknowledge_dev_database
+        image: mariadb:12.0.2-noble
+        environment:
+            - MARIADB_ROOT_PASSWORD=${DATABASE_ROOT_PASSWORD:?error}
+            - MARIADB_DATABASE=${DATABASE_NAME:?error}
+            - MARIADB_USER=${DATABASE_USER:?error}
+            - MARIADB_PASSWORD=${DATABASE_PASSWORD:?error}
+        volumes:
+            - app:/var/lib/mysql
+        ports:
+            - ${DATABASE_PORT:?error}:3306
+
+volumes:
+    app:
