@@ -11,6 +11,7 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
+	"github.com/okaniyoshiii/openknowledge/internal/routes"
 )
 
 var address = flag.String("address", "127.0.0.1:8080", "tcp address the HTTP server will listen to")
@@ -37,6 +38,7 @@ func main() {
 	}
 
 	mux := http.NewServeMux()
+	mux.Handle("GET /", new(routes.PostsHandler))
 
 	server := http.Server{
 		Addr:              *address,
