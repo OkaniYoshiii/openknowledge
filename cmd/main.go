@@ -46,7 +46,7 @@ func main() {
 	}
 
 	mux := http.NewServeMux()
-	mux.Handle("GET /", &routes.PostsHandler{
+	mux.Handle("GET /{$}", &routes.PostsHandler{
 		Template: templates[0],
 	})
 
