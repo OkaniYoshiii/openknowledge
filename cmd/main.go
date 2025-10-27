@@ -40,7 +40,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	base := template.Must(template.New("base.html").ParseFiles(TemplateDir + "/base.html"))
+	base := template.Must(template.ParseFiles(TemplateDir + "/base.html"))
 	templates := [...]*template.Template{
 		template.Must(template.Must(base.Clone()).ParseFiles(TemplateDir + "/posts/index.html")),
 	}
