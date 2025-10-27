@@ -1,7 +1,9 @@
 package routes
 
-import "github.com/okaniyoshiii/openknowledge/internal/templates"
+import (
+	"html/template"
+)
 
 type Config struct {
-	templates.Config
+	*template.Template
 }

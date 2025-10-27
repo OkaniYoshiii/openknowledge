@@ -15,6 +15,8 @@ import (
 	"github.com/okaniyoshiii/openknowledge/internal/routes"
 )
 
+const TemplateDir = "./website/templates"
+
 var address = flag.String("address", "127.0.0.1:8080", "tcp address the HTTP server will listen to")
 
 func main() {
@@ -38,16 +40,14 @@ func main() {
 		log.Fatal(err)
 	}
 
-	tmplDir := "./website/templates"
-	baseTmpl := template.Must(template.New("base.html").ParseFiles(tmplDir + "/base.html"))
-
-	config := routes.Config{}
-	config.TemplateDir = tmplDir
-	config.BaseTemplate = baseTmpl
+	base := template.Must(template.New("base.html").ParseFiles(TemplateDir + "/base.html"))
+	templates := [...]*template.Template{
+		template.Must(template.Must(base.Clone()).ParseFiles(TemplateDir + "/posts/index.html")),
+	}
 
 	mux := http.NewServeMux()
 	mux.Handle("GET /", &routes.PostsHandler{
-		Config: config,
+		Template: templates[0],
 	})
 
 	server := http.Server{
